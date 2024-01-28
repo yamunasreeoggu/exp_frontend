@@ -10,7 +10,7 @@ pipeline {
   stages {
     stage( 'CI') {
       steps {
-        echo CI
+        'echo CI'
       }
     }
   }
