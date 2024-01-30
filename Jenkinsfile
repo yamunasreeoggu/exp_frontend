@@ -11,12 +11,23 @@ pipeline {
     stage( 'Code Quality') {
       when {
         allOf {
-          branch 'main'
           expression { env.TAG_NAME != env.BRANCH_NAME }
         }
       }
       steps {
         sh 'sonar-scanner -Dsonar.host.url=http://3.230.172.62:9000 -Dsonar.login=admin -Dsonar.password=admin123 -Dsonar.projectKey=exp_frontend -Dsonar.qualitygate.wait=true'
+      }
+    }
+
+    stage ( 'Unit Tests') {
+      when {
+        allOf {
+         branch 'main'
+         expression { env.TAG_NAME != env.GIT_BRANCH }
+        }
+      }
+      steps {
+        sh ' echo Unit Tests'
       }
     }
 
@@ -27,12 +38,6 @@ pipeline {
       steps {
         sh 'echo CI'
       }
-    }
-  }
-
-  post {
-    always {
-    cleanWs()
     }
   }
 }
