@@ -17,9 +17,9 @@ pipeline {
 
     stage ( 'Release' ) {
       steps {
-        sh 'docker build -t 492681564023.dkr.ecr.us-east-1.amazonaws.com/frontend:1.0.0 .'
-        sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 492681564023.dkr.ecr.us-east-1.amazonaws.com'
-        sh 'docker push 492681564023.dkr.ecr.us-east-1.amazonaws.com/frontend:1.0.0'
+        sh 'podman build -t 492681564023.dkr.ecr.us-east-1.amazonaws.com/frontend:1.0.0 .'
+        sh 'podman login -u AWS -p $(aws ecr get-login-password --region us-east-1) 492681564023.dkr.ecr.us-east-1.amazonaws.com'
+        sh 'podman push 492681564023.dkr.ecr.us-east-1.amazonaws.com/frontend:1.0.0'
       }
     }
   }
