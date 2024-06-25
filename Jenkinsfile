@@ -17,7 +17,7 @@ pipeline {
 
     stage ( 'Release' ) {
       steps {
-        sh 'podman build -t 492681564023.dkr.ecr.us-east-1.amazonaws.com/frontend:1.0.0 .'
+        sh 'podman build --cgroup-manager=cgroupfs -t 492681564023.dkr.ecr.us-east-1.amazonaws.com/frontend:1.0.0 .'
         sh 'podman login -u AWS -p $(aws ecr get-login-password --region us-east-1) 492681564023.dkr.ecr.us-east-1.amazonaws.com'
         sh 'podman push 492681564023.dkr.ecr.us-east-1.amazonaws.com/frontend:1.0.0'
       }
